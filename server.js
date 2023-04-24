@@ -49,8 +49,24 @@ app.post("/finish", async (req, res) => {
 });
 
 app.get("/list", async (req, res) => {
+  // await AppointmentService.Search("98321298731");
+
   const appointments = await AppointmentService.GetAll(true);
   res.render("list", { appointments });
 });
 
-app.listen(8080, () => {});
+app.get("/searchresult", async (req, res) => {
+  const { search } = req.query;
+  const appointments = await appointmentService.Search(search);
+  res.render("list", { appointments });
+});
+
+const pollTime = 5 * 60000;
+
+setInterval(() => {
+  console.log("A task rodou!!");
+}, pollTime);
+
+app.listen(8080, () => {
+  console.log("Server logado!!");
+});
