@@ -3,6 +3,7 @@ const app = express();
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const appointmentService = require("./services/AppointmentService");
+const AppointmentService = require("./services/AppointmentService");
 
 app.use(express.static("public"));
 
@@ -26,6 +27,24 @@ app.post("/create", async (req, res) => {
 
   if (!status) res.send("Ocorreu uma falha");
 
+  res.redirect("/");
+});
+
+app.get("/appointments", async (req, res) => {
+  const appointments = await AppointmentService.GetAll(false);
+  res.json(appointments);
+});
+
+app.get("/event/:id", async (req, res) => {
+  const { id } = req.params;
+  const appointment = await AppointmentService.GetById(id);
+
+  res.render("event", { appointment });
+});
+
+app.post("/finish", async (req, res) => {
+  const { id } = req.body;
+  await AppointmentService.Finish(id);
   res.redirect("/");
 });
 
