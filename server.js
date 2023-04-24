@@ -48,4 +48,9 @@ app.post("/finish", async (req, res) => {
   res.redirect("/");
 });
 
+app.get("/list", async (req, res) => {
+  const appointments = await AppointmentService.GetAll(true);
+  res.render("list", { appointments });
+});
+
 app.listen(8080, () => {});

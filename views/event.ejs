@@ -4,4 +4,9 @@
 <h4>Email: <%= appointment.email %> </h4>
 <h4>CPF: <%= appointment.cpf %></h4>
 <hr>
-<button>Finalizar Consulta</button>
+<% if(!appointment.finished) { %>
+  <form action="/finish" method="post">
+    <input type="hidden" name="id" value="<%= appointment._id %>" />
+    <button>Finalizar Consulta</button>
+  </form>
+<% } %>
